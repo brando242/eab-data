@@ -329,11 +329,11 @@ INSERT INTO `HomeType`(hometype) VALUES
   ("Rental House/Apartment"),
   ("Personal Residence");
 
-CREATE TABLE IF NOT EXISTS `TransportMethod` (
-`transportmethodid` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-`transportmethod` VARCHAR(50)
+CREATE TABLE IF NOT EXISTS `Transport` (
+`transportid` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+`transport` VARCHAR(50)
 );
-INSERT INTO `TransportMethod`(transportmethod) VALUES
+INSERT INTO `Transport`(transport) VALUES
   ("Walk/Bike"),
   ("Public Transportation"),
   ("Personal Vehicle"),
@@ -369,8 +369,8 @@ CONSTRAINT `Alcohol.cooperid_SocialHistory.alcoholid` FOREIGN KEY(`alcoholid`) R
 CONSTRAINT `FoodStamp.foodstampid_SocialHistory.foodstampid` FOREIGN KEY(`foodstampid`) REFERENCES `FoodStamp` (`foodstampid`),
 `hometypeid` BIGINT UNSIGNED NOT NULL,
 CONSTRAINT `HomeType.hometypeid_SocialHistory.hometypeid` FOREIGN KEY(`hometypeid`) REFERENCES `HomeType` (`hometypeid`),
-`transportmethodid` BIGINT UNSIGNED NOT NULL,
-CONSTRAINT `TransportMethod.transportmethodid_SocialHistory.transportmethodid` FOREIGN KEY(`transportmethodid`) REFERENCES `TransportMethod` (`transportmethodid`),
+`transportid` BIGINT UNSIGNED NOT NULL,
+CONSTRAINT `Transport.transportid_SocialHistory.transportid` FOREIGN KEY(`transportid`) REFERENCES `Transport` (`transportid`),
 `patientid` BIGINT UNSIGNED NOT NULL,
 CONSTRAINT `Patient.patientid_SocialHistory.patientid` FOREIGN KEY(`patientid`) REFERENCES `Patient` (`patientid`)
 );
