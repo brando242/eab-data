@@ -1,4 +1,7 @@
 <?php
+error_reporting (E_ALL);
+ini_set("display_errors",1);
+
 $con = new mysqli($host, $db_user, $db_pass, $db_db);
 
 
@@ -220,11 +223,10 @@ for ($year; $year > $year_past; $year--){
         </select>
       Phone Number:
         <input type="text" name="phone_number"/>
-      <!--Do I deal with phone number asa string or as a numerical value since I am using php???-->
+
       Email:
         <input type="text" name="email_address"/>
 
-<!--Add a header here to separate normal patient information and contact information from the Demographic stuff below?? DEMOGRAPHICS-->
       Gender:
         <select name="gender"/>
 <?php
@@ -320,7 +322,7 @@ $numchildrens = array("0","1","2","3","4","5","6","7","8");
 ?>
         </select> <br />
       Are you on Disabilty?
-        <select name="disabilty"/>
+        <select name="disability"/>
 <?php
         while ($stmt_disability->fetch()){        
             echo "<option value=\"$disabilityid\">$disability</option>";
@@ -408,6 +410,7 @@ $numchildrens = array("0","1","2","3","4","5","6","7","8");
             echo "<option value=\"$transportid\">$transport</option>";
         }
 ?>
+        </select>
        How did you hear about EAB? 
         <input type="text" name="heareab"/>
         
@@ -418,7 +421,7 @@ $numchildrens = array("0","1","2","3","4","5","6","7","8");
             echo "<option value=\"$visittypeid\">$visittype</option>";
         }
 ?>
-
+        </select>
         Which option best describes the reason for your visit?
         <select value="reasonforvisit"/>
 <?php
@@ -426,7 +429,7 @@ $numchildrens = array("0","1","2","3","4","5","6","7","8");
             echo "<option value=\"$reasonforvisitid\">$reasonforvisit</option>";
         }
 ?>
-
+        </select>
         Are you visiting on Wednesday or Sunday?
         <select value="dayofvisit"/>
 <?php
@@ -434,7 +437,7 @@ $numchildrens = array("0","1","2","3","4","5","6","7","8");
             echo "<option value=\"$dayofvisitid\">$dayofvisit</option>";
         }
 ?>
-
+        </select>
     
     Estimate Date of Last Mammogram:
     <select name="mammogram_month"/>
@@ -460,7 +463,7 @@ for ($year; $year > $year_past; $year--){
   echo "        <option value=\"$year\">$year</option>\n";
 }
 ?>
-
+        </select>
 
     Estimate Date of Last Colonoscopy:
     <select name="colonoscopy_month"/>
