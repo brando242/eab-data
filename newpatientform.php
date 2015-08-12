@@ -52,6 +52,7 @@ for ($year; $year > $year_past; $year--){
         </select>
       Address:
         <input type="text" name="address_street"/>
+      City
         <select name="city"/>
 <?php
 $cities = array("Birmingham","Montgomery","Huntsville","Mobile");
@@ -60,8 +61,10 @@ for ($city_count = 0; $city_count <count($cities); $city_count++){
 }
 ?>
         </select>
-        <input type="text" name="state"/>
-        <input type="text" name="zip"/>
+        State
+          <input type="text" name="state"/>
+        Zipcode
+          <input type="text" name="zip"/>
       Phone Number:
         <input type="text" name="phone_number"/>
       <!--Do I deal with phone number asa string or as a numerical value since I am using php???-->
