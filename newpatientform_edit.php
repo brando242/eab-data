@@ -68,12 +68,6 @@ $query = "SELECT `educationid`, `education` FROM `EducationLevel`;";
         $stmt_education->store_result();
         $stmt_education->bind_result($educationid,$education);
         
-$query = "SELECT `citizenid`, `citizen` FROM `CitizenStatus`;";
-        $stmt_citizen->$con->prepare($query);
-        $stmt_citizen->execute();
-        $stmt_citizen->store_result();
-        $stmt_citizen->bind_result($citizenid,$citizen);
-        
 $query = "SELECT `housestatid`, `housestat` FROM `HeadofHousehold`;";
         $stmt_housestat->$con->prepare($query);
         $stmt_housestat->execute();
@@ -103,12 +97,6 @@ $query = "SELECT `hometypeid`, `hometype` FROM `HomeType`;";
         $stmt_hometype->execute();
         $stmt_hometype->store_result();
         $stmt_hometype->bind_result($hometypeid,$hometype);
-        
-$query = "SELECT `transportid`, `transport` FROM `transport`;";
-        $stmt_transport->$con->prepare($query);
-        $stmt_transport->execute();
-        $stmt_transport->store_result();
-        $stmt_transport->bind_result($transportid,$transport);
         
 $query = "SELECT `foodstampid`, `foodstamp` FROM `FoodStamp`;";
         $stmt_foodstamp->$con->prepare($query);
@@ -498,6 +486,7 @@ for ($year; $year > $year_past; $year--){
   echo "        <option value=\"$year\">$year</option>\n";
 }
 ?>
+        </select>
     
 
     Estimate Date of Last STI/STD Test:
@@ -524,12 +513,11 @@ for ($year; $year > $year_past; $year--){
   echo "        <option value=\"$year\">$year</option>\n";
 }
 ?>
-    
+        </select>
 
     Estimate Date of Last PAP Smear:
     <select name="PAP_month"/>
 <?php
-);
 for ($month = 1; $month < 13; $month++) {
   echo "        <option value=\"$month\">$month_array[$month]</option>\n";
 }
@@ -550,6 +538,7 @@ for ($year; $year > $year_past; $year--){
   echo "        <option value=\"$year\">$year</option>\n";
 }
 ?>    
+        </select>
     <input type="submit" name="submit" value="Submit" />
 
 <!---   -pstat
@@ -562,5 +551,28 @@ Make sure this is separate window that pops up after patient fills out most form
   </body>
 </html>
 <?php
+$stmt_city->close();
+$stmt_state->close();
+$stmt_zip->close();
+$stmt_ethnicity->close();
+$stmt_gender->close();
+$stmt_race->close();
+$stmt_language->close();
+$stmt_citizen->close();
+$stmt_cooper->close();
+$stmt_physician->close();
+$stmt_education->close();
+$stmt_housestat->close();
+$stmt_insurance->close();
+$stmt_disability->close();
+$stmt_veteran->close();
+$stmt_hometype->close();
+$stmt_transport->close();
+$stmt_foodstamp->close();
+$stmt_alcohol->close();
+$stmt_relationship->close();
+$stmt_visittype->close();
+$stmt_reasonforvisit->close();
+$stmt_dayofvisit->close();
 $con->close();
 ?>
