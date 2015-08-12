@@ -311,11 +311,11 @@ INSERT INTO `HomeType`(hometype) VALUES
   ("Rental House/Apartment"),
   ("Personal Residence");
 
-CREATE TABLE IF NOT EXISTS `TransportMethod` (
-`transportmethodid` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-`transportmethod` VARCHAR(50)
+CREATE TABLE IF NOT EXISTS `Transport` (
+`transportid` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+`transport` VARCHAR(50)
 );
-INSERT INTO `TransportMethod`(transportmethod) VALUES
+INSERT INTO `Transport`(transport) VALUES
   ("Walk/Bike"),
   ("Public Transportation"),
   ("Personal Vehicle"),
@@ -340,7 +340,7 @@ CREATE TABLE IF NOT EXISTS `SocialHistory` (
 `alcoholid` BIGINT UNSIGNED NOT NULL,
 `foodstampid` BIGINT UNSIGNED NOT NULL,
 `hometypeid` BIGINT UNSIGNED NOT NULL,
-`transportmethodid` BIGINT UNSIGNED NOT NULL,
+`transportid` BIGINT UNSIGNED NOT NULL,
 `patientid` BIGINT UNSIGNED NOT NULL
 );
 
