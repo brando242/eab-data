@@ -60,8 +60,8 @@ for ($city_count = 0; $city_count <count($cities); $city_count++){
 }
 ?>
         </select>
-        <input type="text" name="address_state"/>
-        <input type="text" name="address_zip"/>
+        <input type="text" name="state"/>
+        <input type="text" name="zip"/>
       Phone Number:
         <input type="text" name="phone_number"/>
       <!--Do I deal with phone number asa string or as a numerical value since I am using php???-->
