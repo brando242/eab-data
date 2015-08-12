@@ -324,9 +324,9 @@ INSERT INTO `TransportMethod`(transportmethod) VALUES
 
 CREATE TABLE IF NOT EXISTS `SocialHistory` (
 `sid` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-`householdincome` VARCHAR(50),
-`numchildren` VARCHAR(50),
-`numfammember` VARCHAR(50),
+`householdincome` BIGINT,
+`numchildren` BIGINT,
+`numfammember` BIGINT,
 `heareab` VARCHAR(50),
 `cooperid` BIGINT UNSIGNED NOT NULL,
 `physicianid` BIGINT UNSIGNED NOT NULL,
