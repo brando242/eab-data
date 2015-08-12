@@ -108,16 +108,16 @@ for ($race_count = 0; $race_count <count($races); $race_count++){
 
       <!--Social History Here-->
       What type of home do you live in?
-        <select name="hometypeid">
-          <option value="1">Homeless</option>
-          <option value="2">Homeless Shelter</option>
-          <option value="3">Apartment or Residence you Pay Rent at</option>
-          <option value="4">Personal Residence</option>
+        <select name="hometype">
+          <option value="homeless">Homeless</option>
+          <option value="homeless shelter">Homeless Shelter</option>
+          <option value="apartment or residence you pay rent at">Apartment or Residence you Pay Rent at</option>
+          <option value="personal residence">Personal Residence</option>
         </select> <br />
       Are you the head of your household?
-        <select name="housestatid">
-          <option value="1">Yes</option>
-          <option value="2">No</option>
+        <select name="housestat">
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
         </select> <br />
       Number of people in your household:
         <select name="numfammember">
@@ -169,36 +169,37 @@ $numchildrens = array("0","1","2","3","4","5","6","7","8");
           <option value="no">No</option>
         </select>
       What is your highest level of education completed?
-        <select name="educationid">
-          <option value="1">Some high school</option>
-          <option value="2">High school diploma</option>
-          <option value="3">GED</option>
-          <option value="4">Some college</option>
-          <option value="5">College</option>
-          <option value="6">Post-graduate</option>
+        <select name="education">
+          <option value="some high school">Some high school</option>
+          <option value="high school diploma">High school diploma</option>
+          <option value="ged">GED</option>
+          <option value="some college">Some college</option>
+          <option value="college">College</option>
+          <option value="post-graduate">Post-graduate</option>
         </select> <br />
       Do you have health insurance?
-        <select name="medicalinsuranceid">
-          <option value="1">Yes</option>
-          <option value="2">No</option>
+        <select name="medicalinsurance">
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
         </select> <br />
       Do you have a primary care physican?
-        <select name="physicianid">
-          <option value="1">Yes</option>
-          <option value="2">No</option>
+        <select name="physician">
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
         </select> <br />
       Is your physician at Cooper Green?
-        <select name="cooperid">
-          <option value="1">Yes</option>
-          <option value="2">No</option>
+        <select name="cooper">
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
         </select> <br />
  
       Do you smoke?
-        <select name="smokeid">
-          <option value="1">Current smoker</option>
-          <option value="2">Quit</option>
-          <option value="3">Never smoked</option>
+        <select name="smoke">
+          <option value="current smoker">Current smoker</option>
+          <option value="quit">Quit</option>
+          <option value="never smoked">Never smoked</option>
         </select> <br />
+        
       If current or past smoker, for how many years have you (or did you) smoke?
         <select name="timesmoked">
 <?php
