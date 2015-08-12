@@ -370,7 +370,7 @@ CONSTRAINT `FoodStamp.foodstampid_SocialHistory.foodstampid` FOREIGN KEY(`foodst
 `hometypeid` BIGINT UNSIGNED NOT NULL,
 CONSTRAINT `HomeType.hometypeid_SocialHistory.hometypeid` FOREIGN KEY(`hometypeid`) REFERENCES `HomeType` (`hometypeid`),
 `transportmethodid` BIGINT UNSIGNED NOT NULL,
-CONSTRAINT `TransportMethod.transportmethodid_SocialHistory.transportmethodid` FOREIGN KEY(`transportmethodid`) REFERENCES `TransportMethod` (`transportmethodid`)
+CONSTRAINT `TransportMethod.transportmethodid_SocialHistory.transportmethodid` FOREIGN KEY(`transportmethodid`) REFERENCES `TransportMethod` (`transportmethodid`),
 `patientid` BIGINT UNSIGNED NOT NULL,
 CONSTRAINT `Patient.patientid_SocialHistory.patientid` FOREIGN KEY(`patientid`) REFERENCES `Patient` (`patientid`)
 );
