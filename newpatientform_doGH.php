@@ -1,6 +1,3 @@
-foodstampid = ?
-heareab=Friend&mammogram_month=1&mammogram_day=1&mammogram_year=2015&colonoscopy_month=1&colonoscopy_day=1&colonoscopy_year=2015&STI_month=1&STI_day=1&STI_year=2015&PAP_month=1&PAP_day=1&PAP_year=2015&submit=Submit
-
 <?php
 
 $fname = $_GET['fname'];
@@ -33,17 +30,24 @@ $physicianid = $_GET['physicianid'];
 $cooperid = $_GET['cooperid'];
 $timesmoked = $_GET['timesmoked'];
 $packsmoked = $_GET['packsmoked'];
-$alcoholid -> ???
-$transportid -> ???
+$alcoholid = $_GET['alcoholid'];
+$transportid = $_GET['transportid'];
+$heareab = $_GET['heareab'];
+$reasonforvisitid = $_GET['reasonforvisitid'];
+$dayofvisitid = $_GET['dayofvisitid'];
+$mammogram = $_GET['mammogram_year'] . "-" . $_GET['mammogram_month'] . "-" . $_GET['mammogram_day'];
+$colonoscopy = $_GET['colonoscopy_year'] . "-" . $_GET['colonoscopy_month'] . "-" . $_GET['colonoscopy_day'];
+$sti = $_GET['STI_year'] . "-" . $_GET['STI_month'] . "-" . $_GET['STI_day'];
+$papsmear = $_GET['PAP_year'] . "-" . $_GET['PAP_month'] . "-" . $_GET['PAP_day'];
+$submit = $_GET['Submit'];
 
-$heareab
-$reasonforvisitid
-$dayofvisitid
-$mammogram___none ids
-$col
-$STI
-$Pap
-$submit?!?
+$query = "INSERT INTO `Patient` (`fname`, `lname`, `genderid`, `raceid`, `ethnicityid`, `dob`, `address_street`, `cityid`, `stateid`, `zipid`, `phone_number`, `email_address`, `citizenid`, `languageid`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+$stmt_insert = $con->prepare($query);
+$stmt_insert->bind_param("ssssssssssssss", $fname, $lname, $genderid, $raceid, $ethnicityid, $dob, $address_street, $cityid, $stateid, $zipid, $phone_number, $email_address, $citizenid, $languageid);
+$stmt_insert->execute();
+$stmt_insert->store_result();
+$stmt_insert->close();
+$con->close();
 
 
 ?>
