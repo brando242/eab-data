@@ -1,6 +1,13 @@
 <?php
 error_reporting (E_ALL);
 ini_set("display_errors",1);
+//=======
+
+$host = "localhost";
+$db_user = "eabdbw";
+$db_pass = "OeYDLhftkUc9knyl7Je8dgaf5abbkenL";
+$db_db = "eabdbw";
+//>>>>>>> Stashed changes
 
 $con = new mysqli($host, $db_user, $db_pass, $db_db);
 
@@ -9,7 +16,7 @@ $query = "SELECT `cityid`, `city` FROM `City`;";
         $stmt_city = $con->prepare($query);
         $stmt_city->execute();
         $stmt_city->store_result();
-        $stmt_city->bind_result($city);
+        $stmt_city->bind_result($cityid, $city);
 
 $query = "SELECT `stateid`, `state` FROM `State`;";
         $stmt_state = $con->prepare($query);
@@ -58,6 +65,12 @@ $query = "SELECT `cooperid`, `cooper` FROM `CooperGreen`;";
         $stmt_cooper->execute();
         $stmt_cooper->store_result();
         $stmt_cooper->bind_result($cooperid,$cooper);
+        
+$query = "SELECT `employmentid`, `employment` FROM `CurrentEmployment`;";
+        $stmt_employment = $con->prepare($query);
+        $stmt_employment->execute();
+        $stmt_employment->store_result();
+        $stmt_employment->bind_result($employmentid,$employment);
 
 $query = "SELECT `physicianid`, `physician` FROM `PrimaryPhysician`;";
         $stmt_physician = $con->prepare($query);
@@ -142,7 +155,20 @@ $query = "SELECT `dayofvisitid`, `dayofvisit` FROM `DayofVisit`;";
         $stmt_dayofvisit->execute();
         $stmt_dayofvisit->store_result();
         $stmt_dayofvisit->bind_result($dayofvisitid,$dayofvisit);
+        
+$query = "SELECT `drugtypeid`, `drugtype` FROM `DrugType`;";
+        $stmt_drugtype = $con->prepare($query);
+        $stmt_drugtype->execute();
+        $stmt_drugtype->store_result();
+        $stmt_drugtype->bind_result($drugtypeid,$drugtype);
+        
+$query = "SELECT `allergylistid`, `allergylist` FROM `AllergyList`;";
+        $stmt_allergylist = $con->prepare($query);
+        $stmt_allergylist->execute();
+        $stmt_allergylist->store_result();
+        $stmt_allergylist->bind_result($allergylistid,$allergylist);
 ?>
+
 <html>
   <head>
     <title>EAB New Patient Intake Form</title>
@@ -151,7 +177,7 @@ $query = "SELECT `dayofvisitid`, `dayofvisit` FROM `DayofVisit`;";
     <h1>EAB New Patient Intake Form</h1>
     <p> Please update your information in the form below.</p>
     <!-- Form for adding user -->
-    <form action="newpatientform_do.php" method="get" >
+    <form action="newpatientform_doGH.php" method="get" >
       First Name: 
         <input type="text" name="fname"/>
       Last Name: 
@@ -198,15 +224,16 @@ for ($year; $year > $year_past; $year--){
         Address:
         <input type="text" name="address_street"/>
         City:
-        <select name="city"/>
+        <select name="cityid"/>
 <?php
+
 while ($stmt_city->fetch()){        
     echo "          <option value=\"$cityid\">$city</option>";
 }
 ?>
         </select>
         State:
-        <select name="state"/>
+        <select name="stateid"/>
 <?php
 while ($stmt_state->fetch()){        
     echo "<option value=\"$stateid\">$state</option>";
@@ -214,7 +241,7 @@ while ($stmt_state->fetch()){
 ?>
         </select>
         Zip:
-        <select name="zip"/>
+        <select name="zipid"/>
 <?php
 while ($stmt_zip->fetch()){        
     echo "<option value=\"$zipid\">$zip</option>";
@@ -228,7 +255,7 @@ while ($stmt_zip->fetch()){
         <input type="text" name="email_address"/>
 
       Gender:
-        <select name="gender"/>
+        <select name="genderid"/>
 <?php
 while ($stmt_gender->fetch()){        
     echo "<option value=\"$genderid\">$gender</option>";
@@ -236,7 +263,7 @@ while ($stmt_gender->fetch()){
 ?>
         </select>
       Ethnicity:
-      <select name="ethnicity"/>
+      <select name="ethnicityid"/>
 <?php
 while ($stmt_ethnicity->fetch()){        
     echo "<option value=\"$ethnicityid\">$ethnicity</option>";
@@ -244,7 +271,7 @@ while ($stmt_ethnicity->fetch()){
 ?>
         </select>
       Race:
-        <select name="race"/>
+        <select name="raceid"/>
 <?php
 while ($stmt_race->fetch()){        
     echo "<option value=\"$raceid\">$race</option>";
@@ -252,7 +279,7 @@ while ($stmt_race->fetch()){
 ?>
         </select>
       What is your primary language?:
-        <select name="language"/>
+        <select name="languageid"/>
 <?php
 while ($stmt_language->fetch()){        
     echo "<option value=\"$languageid\">$language</option>";
@@ -260,7 +287,7 @@ while ($stmt_language->fetch()){
 ?>
         </select>
       What is your Citizenship Status?:
-        <select name="citizen"/>
+        <select name="citizenid"/>
 <?php
 while ($stmt_citizen->fetch()){        
     echo "<option value=\"$citizenid\">$citizen</option>";
@@ -270,7 +297,7 @@ while ($stmt_citizen->fetch()){
 
       <!--Social History Here-->
       What type of home do you live in?
-        <select name="hometype">
+        <select name="hometypeid">
 <?php
 while ($stmt_hometype->fetch()){        
     echo "<option value=\"$hometypeid\">$hometype</option>";
@@ -278,7 +305,7 @@ while ($stmt_hometype->fetch()){
 ?>
         </select> <br />
       Are you the head of your household?
-        <select name="housestat">
+        <select name="housestatid">
 <?php
 while ($stmt_housestat->fetch()){        
     echo "<option value=\"$housestatid\">$housestat</option>";
@@ -304,7 +331,7 @@ $numchildrens = array("0","1","2","3","4","5","6","7","8");
 ?>
         </select> <br />
       What is your relationship status?
-        <select name="relationship"/>
+        <select name="relationshipid"/>
 <?php
 while ($stmt_relationship->fetch()){        
     echo "<option value=\"$relationshipid\">$relationship</option>";
@@ -314,7 +341,7 @@ while ($stmt_relationship->fetch()){
       What is your monthly household income?
         <input type="text" name="householdincome"> <br />
       Are you currently employed?
-        <select name="employment"/>
+        <select name="employmentid"/>
 <?php
 while ($stmt_employment->fetch()){        
     echo "<option value=\"$employmentid\">$employment</option>";
@@ -322,7 +349,7 @@ while ($stmt_employment->fetch()){
 ?>
         </select> <br />
       Are you on Disabilty?
-        <select name="disability"/>
+        <select name="disabilityid"/>
 <?php
 while ($stmt_disability->fetch()){        
     echo "<option value=\"$disabilityid\">$disability</option>";
@@ -330,7 +357,7 @@ while ($stmt_disability->fetch()){
 ?>
         </select> <br />
       Are you part of the SNAP program formerly known as Foodstamps?
-        <select value="foodstamp"/>
+        <select name="foodstampid"/>
 <?php
 while ($stmt_foodstamp->fetch()){        
     echo "<option value=\"$foodstampid\">$foodstamp</option>";
@@ -338,7 +365,7 @@ while ($stmt_foodstamp->fetch()){
 ?>
         </select>
       Are you a United States Military Veteran?
-        <select name="veteran"/>
+        <select name="veteranid"/>
 <?php
 while ($stmt_veteran->fetch()){        
     echo "<option value=\"$veteranid\">$veteran</option>";
@@ -346,7 +373,7 @@ while ($stmt_veteran->fetch()){
 ?>
         </select>
       What is your highest level of education completed?
-        <select name="education">
+        <select name="educationid">
 <?php
 while ($stmt_education->fetch()){        
     echo "<option value=\"$educationid\">$education</option>";
@@ -354,7 +381,7 @@ while ($stmt_education->fetch()){
 ?>
         </select> <br />
       Do you have health insurance?
-        <select name="insurance">
+        <select name="insuranceid">
 <?php
 while ($stmt_insurance->fetch()){        
     echo "<option value=\"$insuranceid\">$insurance</option>";
@@ -362,7 +389,7 @@ while ($stmt_insurance->fetch()){
 ?>
         </select> <br />
       Do you have a primary care physican?
-        <select name="physician">
+        <select name="physicianid">
 <?php
 while ($stmt_physician->fetch()){        
     echo "<option value=\"$physicianid\">$physician</option>";
@@ -370,7 +397,7 @@ while ($stmt_physician->fetch()){
 ?>
         </select> <br />
       Is your physician at Cooper Green?
-        <select name="cooper">
+        <select name="cooperid">
 <?php
 while ($stmt_cooper->fetch()){        
     echo "<option value=\"$cooperid\">$cooper</option>";
@@ -396,7 +423,7 @@ $packsmokeds = array("0.5","1","1.5","2","2.5","3","3.5","4","4.5","5","5.5","6"
         </select>
 
       How often do you drink alcohol?
-        <select value="alcohol"/>
+        <select name="alcoholid"/>
 <?php
 while ($stmt_alcohol->fetch()){        
     echo "<option value=\"$alcoholid\">$alcohol</option>";
@@ -404,7 +431,7 @@ while ($stmt_alcohol->fetch()){
 ?>
         </select>
       How do you primarily get to clinic?
-        <select value="transport"/>
+        <select name="transportid"/>
 <?php
 while ($stmt_transport->fetch()){        
     echo "<option value=\"$transportid\">$transport</option>";
@@ -415,15 +442,16 @@ while ($stmt_transport->fetch()){
         <input type="text" name="heareab"/>
         
        How would you describe your visit type?
-        <select value="visittype"/>
+        <select name="visittypeid"/>
 <?php
+
 while ($stmt_visittype->fetch()){        
     echo "<option value=\"$visittypeid\">$visittype</option>";
 }
 ?>
         </select>
         Which option best describes the reason for your visit?
-        <select value="reasonforvisit"/>
+        <select name="reasonforvisitid"/>
 <?php
 while ($stmt_reasonforvisit->fetch()){        
     echo "<option value=\"$reasonforvisitid\">$reasonforvisit</option>";
@@ -431,7 +459,7 @@ while ($stmt_reasonforvisit->fetch()){
 ?>
         </select>
         Are you visiting on Wednesday or Sunday?
-        <select value="dayofvisit"/>
+        <select name="dayofvisitid"/>
 <?php
 while ($stmt_dayofvisit->fetch()){        
     echo "<option value=\"$dayofvisitid\">$dayofvisit</option>";
@@ -442,7 +470,6 @@ while ($stmt_dayofvisit->fetch()){
     Estimate Date of Last Mammogram:
     <select name="mammogram_month"/>
 <?php
-);
 for ($month = 1; $month < 13; $month++) {
   echo "        <option value=\"$month\">$month_array[$month]</option>\n";
 }
@@ -468,7 +495,6 @@ for ($year; $year > $year_past; $year--){
     Estimate Date of Last Colonoscopy:
     <select name="colonoscopy_month"/>
 <?php
-);
 for ($month = 1; $month < 13; $month++) {
   echo "        <option value=\"$month\">$month_array[$month]</option>\n";
 }
@@ -495,7 +521,6 @@ for ($year; $year > $year_past; $year--){
     Estimate Date of Last STI/STD Test:
     <select name="STI_month"/>
 <?php
-);
 for ($month = 1; $month < 13; $month++) {
   echo "        <option value=\"$month\">$month_array[$month]</option>\n";
 }
@@ -542,10 +567,25 @@ for ($year; $year > $year_past; $year--){
 }
 ?>    
         </select>
+    What brings you to the clinic today? 
+        <input type="text" name="pstat"/>
+        
     <input type="submit" name="submit" value="Submit" />
 
-<!---   -pstat
-current data at time of submission - currentdate
+    Select any drugs that you are currently taking:
+<?php
+    while ($stmt_drugtype->fetch()){
+        echo "      <input type=\"checkbox\" name = \"drugs[]\" value =\"$drugtypeid\"/>$drugtype</input>";
+    }   
+?>
+    Check any allergies that you experience:
+<?php
+    while ($stmt_allergylist->fetch()){
+        echo "      <input type=\"checkbox\" name = \"allergies[]\" value =\"$allergylistid\"/>$allergylist</input>";
+    }   
+?>
+<!--- 
+
 allergies 
 Make sure this is separate window that pops up after patient fills out most form. Check in officer will add the practicefusion PRn to this. Practice Fusion PRN  -- patientid -->
 
@@ -577,5 +617,7 @@ $stmt_relationship->close();
 $stmt_visittype->close();
 $stmt_reasonforvisit->close();
 $stmt_dayofvisit->close();
+$stmt_drugtype->close();
+$stmt_allergylist->close();
 $con->close();
 ?>
