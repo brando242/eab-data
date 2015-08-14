@@ -2,7 +2,9 @@
 error_reporting (E_ALL);
 ini_set("display_errors",1);
 
-require_once("includes/db.php");
+
+require_once("referencefiles/db.php");
+
 
 $con = new mysqli($host, $db_user, $db_pass, $db_db);
 
@@ -145,12 +147,6 @@ $query = "SELECT `reasonforvisitid`, `reasonforvisit` FROM `ReasonforVisit`;";
         $stmt_reasonforvisit->store_result();
         $stmt_reasonforvisit->bind_result($reasonforvisitid,$reasonforvisit);
         
-$query = "SELECT `dayofvisitid`, `dayofvisit` FROM `DayofVisit`;";
-        $stmt_dayofvisit = $con->prepare($query);
-        $stmt_dayofvisit->execute();
-        $stmt_dayofvisit->store_result();
-        $stmt_dayofvisit->bind_result($dayofvisitid,$dayofvisit);
-        
 $query = "SELECT `drugtypeid`, `drugtype` FROM `DrugType`;";
         $stmt_drugtype = $con->prepare($query);
         $stmt_drugtype->execute();
@@ -166,19 +162,20 @@ $query = "SELECT `allergylistid`, `allergylist` FROM `AllergyList`;";
 
 <html>
   <head>
-    <title>EAB New Patient Intake Form</title>
+    <title>EAB Database</title>
   </head>
   <body>
     <h1>EAB New Patient Intake Form</h1>
     <p> Please update your information in the form below.</p>
     <!-- Form for adding user -->
-    <form action="newpatientform_doGH.php" method="get" >
+    <form action="newpatientform_do.php" method="get" >
       First Name: 
         <input type="text" name="fname"/>
       Last Name: 
         <input type="text" name="lname"/>
       Date of Birth:
         <select name="dob_month"/>
+        <option value=""></option>
 <?php
 //Array of Months
 $month_array = array(
@@ -201,6 +198,7 @@ for ($month = 1; $month < 13; $month++) {
 ?>
         </select>
         <select name="dob_day" class="form-control">
+        <option value=""></option>
 <?php
 for ($day = 1; $day < 32; $day++) {
   echo "        <option value=\"$day\">$day</option>\n";
@@ -208,6 +206,7 @@ for ($day = 1; $day < 32; $day++) {
 ?>
         </select>
         <select name="dob_year" class="form-control">
+        <option value=""></option>
 <?php
 $year = date("Y");
 $year_past = $year - 120;
@@ -227,6 +226,8 @@ while ($stmt_city->fetch()){
 }
 ?>
         </select>
+        Other city not listed:
+        <input type="text" name="cityaddition"/>
         State:
         <select name="stateid"/>
 <?php
@@ -235,6 +236,8 @@ while ($stmt_state->fetch()){
 }
 ?>
         </select>
+        Other state not listed:
+        <input type="text" name="stateaddition"/>
         Zip:
         <select name="zipid"/>
 <?php
@@ -243,6 +246,8 @@ while ($stmt_zip->fetch()){
 }
 ?>
         </select>
+        Other zip not listed:
+        <input type="text" name="zipaddition"/>
       Phone Number:
         <input type="text" name="phone_number"/>
 
@@ -281,6 +286,8 @@ while ($stmt_language->fetch()){
 }
 ?>
         </select>
+      Other language not listed:
+        <input type="text" name="languageaddition"/>
       What is your Citizenship Status?:
         <select name="citizenid"/>
 <?php
@@ -309,18 +316,20 @@ while ($stmt_housestat->fetch()){
         </select> <br />
       Number of people in your household:
         <select name="numfammember">
+        <option value=""></option>
 <?php
 $numfammembers = array("1","2","3","4","5","6","7","8","9","10","11","12","13");
-    for ($numfammember_count = 0; $numfammember_count <count($numfammembers)+1; $numfammember_count++){
+    for ($numfammember_count = 0; $numfammember_count <count($numfammembers); $numfammember_count++){
         echo"        <option value=\"$numfammembers[$numfammember_count]\">$numfammembers[$numfammember_count]</option>\n";
     }
 ?>
         </select> <br />
       Number of children under 18 in your household:
         <select name="numchildren">
+          <option value="null"></option>
 <?php
 $numchildrens = array("0","1","2","3","4","5","6","7","8");
-    for ($numchildren_count = 0; $numchildren_count <count($numchildrens)+1; $numchildren_count++){
+    for ($numchildren_count = 0; $numchildren_count <count($numchildrens); $numchildren_count++){
         echo"        <option value=\"$numchildrens[$numchildren_count]\">$numchildrens[$numchildren_count]</option>\n";
     }
 ?>
@@ -399,8 +408,16 @@ while ($stmt_cooper->fetch()){
 }
 ?>
         </select> <br />
+            Please select your smoking status:
+        <select name = 'smokingstatus'>
+        <option value=""></option>
+        <option value ="1">Never Smoked</option>
+        <option value ="2">Past Smoker</option>
+        <option value ="3">Current Smoker</option>
+        </select>
       If current or past smoker, for how many years have you (or did you) smoke?
         <select name="timesmoked">
+          <option value="">N/A</option>
 <?php
 for ($timesmoked_array = 1; $timesmoked_array < 71; $timesmoked_array++) {
     echo "        <option value=\"$timesmoked_array\">$timesmoked_array</option>\n";
@@ -408,15 +425,26 @@ for ($timesmoked_array = 1; $timesmoked_array < 71; $timesmoked_array++) {
 ?>
         </select>
       If current or past smoker, how many packs a day do/did you smoke?
-        <select name="packsmoked">
+        <select name="packsperday">
+        <option value="">N/A</option>
 <?php
 $packsmokeds = array("0.5","1","1.5","2","2.5","3","3.5","4","4.5","5","5.5","6","6.5","7");
-    for ($packsmoked_count = 0; $packsmoked_count <count($packsmokeds)+1; $packsmoked_count++){
+    for ($packsmoked_count = 0; $packsmoked_count <count($packsmokeds); $packsmoked_count++){
         echo"        <option value=\"$packsmokeds[$packsmoked_count]\">$packsmokeds[$packsmoked_count]</option>\n";
         }
 ?>
         </select>
-
+        If you smoked previously, what year did you quit?
+        <select name="quitdate">
+        <option value="">N/A</option>
+<?php
+$year = date("Y");
+$year_past = $year - 120;
+for ($year; $year > $year_past; $year--){
+  echo "        <option value=\"$year\">$year</option>\n";
+}
+?>
+        </select>
       How often do you drink alcohol?
         <select name="alcoholid"/>
 <?php
@@ -453,17 +481,10 @@ while ($stmt_reasonforvisit->fetch()){
 }
 ?>
         </select>
-        Are you visiting on Wednesday or Sunday?
-        <select name="dayofvisitid"/>
-<?php
-while ($stmt_dayofvisit->fetch()){        
-    echo "<option value=\"$dayofvisitid\">$dayofvisit</option>";
-}
-?>
-        </select>
-    
+        
     Estimate Date of Last Mammogram:
     <select name="mammogram_month"/>
+    <option value=""></option>
 <?php
 for ($month = 1; $month < 13; $month++) {
   echo "        <option value=\"$month\">$month_array[$month]</option>\n";
@@ -471,6 +492,7 @@ for ($month = 1; $month < 13; $month++) {
 ?>
         </select>
         <select name="mammogram_day" class="form-control">
+        <option value=""></option>
 <?php
 for ($day = 1; $day < 32; $day++) {
   echo "        <option value=\"$day\">$day</option>\n";
@@ -478,6 +500,7 @@ for ($day = 1; $day < 32; $day++) {
 ?>
         </select>
         <select name="mammogram_year" class="form-control">
+        <option value=""></option>
 <?php
 $year = date("Y");
 $year_past = $year - 120;
@@ -489,6 +512,7 @@ for ($year; $year > $year_past; $year--){
 
     Estimate Date of Last Colonoscopy:
     <select name="colonoscopy_month"/>
+    <option value=""></option>
 <?php
 for ($month = 1; $month < 13; $month++) {
   echo "        <option value=\"$month\">$month_array[$month]</option>\n";
@@ -496,6 +520,7 @@ for ($month = 1; $month < 13; $month++) {
 ?>
         </select>
         <select name="colonoscopy_day" class="form-control">
+        <option value=""></option>
 <?php
 for ($day = 1; $day < 32; $day++) {
   echo "        <option value=\"$day\">$day</option>\n";
@@ -503,6 +528,7 @@ for ($day = 1; $day < 32; $day++) {
 ?>
         </select>
         <select name="colonoscopy_year" class="form-control">
+        <option value=""></option>
 <?php
 $year = date("Y");
 $year_past = $year - 120;
@@ -515,6 +541,7 @@ for ($year; $year > $year_past; $year--){
 
     Estimate Date of Last STI/STD Test:
     <select name="STI_month"/>
+    <option value=""></option>
 <?php
 for ($month = 1; $month < 13; $month++) {
   echo "        <option value=\"$month\">$month_array[$month]</option>\n";
@@ -522,6 +549,7 @@ for ($month = 1; $month < 13; $month++) {
 ?>
         </select>
         <select name="STI_day" class="form-control">
+        <option value=""></option>
 <?php
 for ($day = 1; $day < 32; $day++) {
   echo "        <option value=\"$day\">$day</option>\n";
@@ -529,6 +557,7 @@ for ($day = 1; $day < 32; $day++) {
 ?>
         </select>
         <select name="STI_year" class="form-control">
+        <option value=""></option>
 <?php
 $year = date("Y");
 $year_past = $year - 120;
@@ -540,6 +569,7 @@ for ($year; $year > $year_past; $year--){
 
     Estimate Date of Last PAP Smear:
     <select name="PAP_month"/>
+    <option value=""></option>
 <?php
 for ($month = 1; $month < 13; $month++) {
   echo "        <option value=\"$month\">$month_array[$month]</option>\n";
@@ -547,6 +577,7 @@ for ($month = 1; $month < 13; $month++) {
 ?>
         </select>
         <select name="PAP_day" class="form-control">
+        <option value=""></option>
 <?php
 for ($day = 1; $day < 32; $day++) {
   echo "        <option value=\"$day\">$day</option>\n";
@@ -554,6 +585,7 @@ for ($day = 1; $day < 32; $day++) {
 ?>
         </select>
         <select name="PAP_year" class="form-control">
+        <option value=""></option>
 <?php
 $year = date("Y");
 $year_past = $year - 120;
@@ -564,8 +596,6 @@ for ($year; $year > $year_past; $year--){
         </select>
     What brings you to the clinic today? 
         <input type="text" name="pstat"/>
-        
-    <input type="submit" name="submit" value="Submit" />
 
     Select any drugs that you are currently taking:
 <?php
@@ -573,16 +603,20 @@ for ($year; $year > $year_past; $year--){
         echo "      <input type=\"checkbox\" name = \"drugs[]\" value =\"$drugtypeid\"/>$drugtype</input>";
     }   
 ?>
+    Other drug not listed:
+        <input type="text" name="drugaddition"/>
+        
     Check any allergies that you experience:
 <?php
     while ($stmt_allergylist->fetch()){
         echo "      <input type=\"checkbox\" name = \"allergies[]\" value =\"$allergylistid\"/>$allergylist</input>";
     }   
 ?>
-<!--- 
+    Other allergy not listed:
+        <input type="text" name="allergyaddition"/>
 
-allergies 
-Make sure this is separate window that pops up after patient fills out most form. Check in officer will add the practicefusion PRn to this. Practice Fusion PRN  -- patientid -->
+        <input type="submit" name="submit" value="Submit" />
+<!--- Make sure this is separate window that pops up after patient fills out most form. Check in officer will add the practicefusion PRn to this. Practice Fusion PRN  -- patientid -->
 
 
     </form>
@@ -611,7 +645,6 @@ $stmt_alcohol->close();
 $stmt_relationship->close();
 $stmt_visittype->close();
 $stmt_reasonforvisit->close();
-$stmt_dayofvisit->close();
 $stmt_drugtype->close();
 $stmt_allergylist->close();
 $con->close();
