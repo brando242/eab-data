@@ -1,13 +1,8 @@
 <?php
 error_reporting (E_ALL);
 ini_set("display_errors",1);
-//=======
 
-$host = "localhost";
-$db_user = "eabdbw";
-$db_pass = "OeYDLhftkUc9knyl7Je8dgaf5abbkenL";
-$db_db = "eabdbw";
-//>>>>>>> Stashed changes
+require_once("includes/db.php");
 
 $con = new mysqli($host, $db_user, $db_pass, $db_db);
 

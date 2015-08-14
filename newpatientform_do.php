@@ -48,10 +48,7 @@ $pstat = $_pstat['pstat'];
 $currentdate = date("Ymd");
 $visittypeid = $_GET["visittypeid"];
 
-$host = "localhost";
-$db_user = "eabdbw";
-$db_pass = "OeYDLhftkUc9knyl7Je8dgaf5abbkenL";
-$db_db = "eabdbw";
+require_once("includes/db.php");
 
 $con = new mysqli($host, $db_user, $db_pass, $db_db);
 
